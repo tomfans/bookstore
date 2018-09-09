@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.isesol.bookstore.POJO.User" alias="User" />
+	</typeAliases>
+
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor" />
+	</plugins>
+
+	<mappers>
+		<mapper resource="com/isesol/bookstore/mapper/userMapper.xml" />
+	</mappers>
+
+
+</configuration>
+
+
+
