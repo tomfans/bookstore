@@ -5,15 +5,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.sym.Name;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.isesol.bookstore.POJO.Msg;
 import com.isesol.bookstore.POJO.User;
 import com.isesol.bookstore.service.userService;
 
@@ -21,6 +25,7 @@ import com.isesol.bookstore.service.userService;
 public class userController {
 
 	@Autowired
+	@Qualifier(value="userServiceImpl")
 	private userService service;
 
 	@RequestMapping("/addUser.do")
@@ -41,6 +46,16 @@ public class userController {
 	}
 
 	@RequestMapping("/user_list.do")
+	@ResponseBody
+	public Msg user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user){
+		PageHelper.startPage(pn, 5);
+		List<User> list = service.getUserList(user);
+		PageInfo pageInfo = new PageInfo(list, 5);
+		return Msg.Success().add("Pageinfo", pageInfo);
+		
+	}
+	
+/*	@RequestMapping("/user_list.do")
 	public String user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user,
 			HttpServletRequest request, Model model) {
 
@@ -48,8 +63,22 @@ public class userController {
 		List<User> list = service.getUserList(user);
 		PageInfo pageInfo = new PageInfo(list, 5);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("user", user);
+
 		return "jsp/user_list";
 
+	}*/
+	
+	
+	@ResponseBody
+	@RequestMapping("/user_list_test.do")
+	public PageInfo user_list_test(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user,
+			HttpServletRequest request, Model model) {
+
+		PageHelper.startPage(pn, 5);
+		List<User> list = service.getUserList(user);
+		PageInfo pageInfo = new PageInfo(list, 5);
+		return pageInfo;
 	}
 
 	@RequestMapping("/user_update.do")

@@ -5,10 +5,13 @@
 
 	<typeAliases>
 		<typeAlias type="com.isesol.bookstore.POJO.User" alias="User" />
+		<typeAlias type="com.isesol.bookstore.POJO.Dept" alias="Dept" />
 	</typeAliases>
-
+	
 	<plugins>
-		<plugin interceptor="com.github.pagehelper.PageInterceptor" />
+		<plugin interceptor="com.github.pagehelper.PageInterceptor">
+				<property name="reasonable" value="true" />
+		</plugin>
 	</plugins>
 
 	<mappers>

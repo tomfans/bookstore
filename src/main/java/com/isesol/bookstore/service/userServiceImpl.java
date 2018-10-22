@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.isesol.bookstore.POJO.Dept;
 import com.isesol.bookstore.POJO.User;
 import com.isesol.bookstore.dao.userMapper;
 
@@ -26,6 +27,13 @@ public class userServiceImpl implements userService {
 		}
 		return false;
 	}
+	
+
+	public List<Dept> getDeptList(Dept dept) {
+		// TODO Auto-generated method stub
+		return usermapper.getDeptList(dept);
+	}
+
 
 	public List<User> getUserList(User user) {
 		// TODO Auto-generated method stub
@@ -69,5 +77,6 @@ public class userServiceImpl implements userService {
 		}
 		return false; 
 	}
+
 
 }

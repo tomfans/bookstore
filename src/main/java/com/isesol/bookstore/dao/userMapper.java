@@ -2,6 +2,7 @@ package com.isesol.bookstore.dao;
 
 import java.util.List;
 
+import com.isesol.bookstore.POJO.Dept;
 import com.isesol.bookstore.POJO.User;
 
 public interface userMapper {
@@ -15,5 +16,8 @@ public interface userMapper {
 	public User getUser(User user);
 	
 	public int deleteUser(User user);
+	
+	public List<Dept> getDeptList(Dept dept);
+	
 
 }

@@ -8,11 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="User" id="usermap">
 		<result property="id" column="id" />
 		<result property="name" column="name" />
+		<result property="dept" column="dept" />
+	</resultMap>
+	
+	<resultMap type="Dept" id="deptmap">
+		<result property="dept" column="dept" />
 	</resultMap>
 
 	<select id="getUserList" parameterType="User" resultMap="usermap">
 
-		select * from user
+		select id,name,dept from user
 
 		<where>
 			<if test="name != '' and name != null">
@@ -20,11 +25,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</where>
 	</select>
-
+	
+	<select id="getDeptList" parameterType="User" resultMap="deptmap">
+			
+			select distinct dept from user
+			
+	</select>
 
 	<insert id="addUser" parameterType="User">
 		insert into user
-		values(#{id},#{name})
+		values(#{id},#{name},#{dept})
 	</insert>
 
 	<update id="updateUser" parameterType="User">
@@ -47,9 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<delete id="deleteUser" parameterType="User">
-
 		delete from user where
-		id = #{id}
+		id =
+		#{id}
 	</delete>
 
 </mapper>

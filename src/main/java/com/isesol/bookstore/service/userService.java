@@ -2,6 +2,7 @@ package com.isesol.bookstore.service;
 
 import java.util.List;
 
+import com.isesol.bookstore.POJO.Dept;
 import com.isesol.bookstore.POJO.User;
 
 public interface userService {
@@ -15,5 +16,7 @@ public interface userService {
 	public User getUser(User user);
 	
 	public boolean deleteUser(User user);
+	
+	public List<Dept> getDeptList(Dept dept);
 
 }

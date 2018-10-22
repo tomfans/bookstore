@@ -3,11 +3,14 @@ package com.isesol.bookstore.POJO;
 public class User {
 	private int id;
 	private String name;
+	private String dept;
+
 	public User() {}
-	public User(int id, String name) {
+	public User(int id, String name, String dept) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.dept = dept;
 
 	}
 	public int getId() {
@@ -22,9 +25,16 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getDept() {
+		return dept;
+	}
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name +  "]";
+		return "User [id=" + id + ", name=" + name + ", dept=" + dept + "]";
 	}
 }
