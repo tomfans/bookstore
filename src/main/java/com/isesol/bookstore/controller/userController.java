@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +21,18 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.isesol.bookstore.POJO.Msg;
 import com.isesol.bookstore.POJO.User;
+import com.isesol.bookstore.dao.redisCacheManager;
 import com.isesol.bookstore.service.userService;
 
 @Controller
 public class userController {
 
 	@Autowired
-	@Qualifier(value="userServiceImpl")
+	@Qualifier(value = "userServiceImpl")
 	private userService service;
+	
+	@Autowired
+	private redisCacheManager redisCacheManager;
 
 	@RequestMapping("/addUser.do")
 	public String addUser(User user, Model model) {
@@ -47,29 +53,28 @@ public class userController {
 
 	@RequestMapping("/user_list.do")
 	@ResponseBody
-	public Msg user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user){
+	public Msg user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user) {
 		PageHelper.startPage(pn, 5);
 		List<User> list = service.getUserList(user);
 		PageInfo pageInfo = new PageInfo(list, 5);
-		return Msg.Success().add("Pageinfo", pageInfo);
-		
+		return Msg.Success().add("Pageinfo", pageInfo).add("product", redisCacheManager.get("product"));
+
 	}
-	
-/*	@RequestMapping("/user_list.do")
-	public String user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user,
-			HttpServletRequest request, Model model) {
 
-		PageHelper.startPage(pn, 5);
-		List<User> list = service.getUserList(user);
-		PageInfo pageInfo = new PageInfo(list, 5);
-		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("user", user);
+	/*
+	 * @RequestMapping("/user_list.do") public String
+	 * user_list(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+	 * User user, HttpServletRequest request, Model model) {
+	 * 
+	 * PageHelper.startPage(pn, 5); List<User> list = service.getUserList(user);
+	 * PageInfo pageInfo = new PageInfo(list, 5); model.addAttribute("pageInfo",
+	 * pageInfo); model.addAttribute("user", user);
+	 * 
+	 * return "jsp/user_list";
+	 * 
+	 * }
+	 */
 
-		return "jsp/user_list";
-
-	}*/
-	
-	
 	@ResponseBody
 	@RequestMapping("/user_list_test.do")
 	public PageInfo user_list_test(@RequestParam(value = "pn", defaultValue = "1") Integer pn, User user,
